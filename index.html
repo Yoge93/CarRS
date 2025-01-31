@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Car Recommendation System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Find Your Perfect Car</h1>
+        
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+
+        <!-- First Step: Name and Mobile Collection -->
+        <div id="step1" class="step">
+            <h2>Tell us about yourself</h2>
+            <input type="text" id="firstName" placeholder="First Name" class="input-field" required />
+            <input type="text" id="lastName" placeholder="Last Name" class="input-field" required />
+            <input type="text" id="mobile" placeholder="Mobile Number" maxlength ="10" class="input-field" required />
+            <button class="btn" onclick="nextStep()">Next</button>
+        </div>
+
+        <!-- Second Step: City Selection -->
+        <div id="step2" class="step" style="display: none;">
+            <h2>Where do you live?</h2>
+            <div class="options">
+                <div class="option" onclick="selectCity('urban')">Urban City</div>
+                <div class="option" onclick="selectCity('semi-urban')">Semi-Urban / Rural</div>
+                <div class="option" onclick="selectCity('tier-2')">Tier-2 City</div>
+                <div class="option" onclick="selectCity('metropolitan')">Metropolitan City</div>
+            </div>
+        </div>
+
+        <!-- Third Step: Car Type Selection -->
+        <div id="step3" class="step" style="display: none;">
+            <h2>What type of car do you prefer?</h2>
+            <div class="options">
+                <div class="option" onclick="selectCarType('sedan')">Sedan</div>
+                <div class="option" onclick="selectCarType('suv')">SUV</div>
+                <div class="option" onclick="selectCarType('hatchback')">Hatchback</div>
+            </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            Loading...
+        </div>
+
+        <!-- Results Section -->
+        <div id="result" class="result" style="display: none;">
+            <h2>Recommended Cars:</h2>
+            <ul id="carList"></ul>
+            <button class="btn" onclick="resetForm()">Try Again</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
