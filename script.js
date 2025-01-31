@@ -1,8 +1,8 @@
-let firstName = ''; // Store First Name
-let lastName = ''; // Store Last Name
-let mobile = ''; // Store Mobile Number
-let city = ''; // Store City Selection
-let carType = ''; // Store Car Type Selection
+let firstName = ''; 
+let lastName = ''; 
+let mobile = ''; 
+let city = ''; 
+let carType = ''; 
 
 // Update progress bar function
 function updateProgressBar(percentage) {
@@ -48,98 +48,56 @@ function selectCarType(selectedCarType) {
     // Update progress bar to 85%
     updateProgressBar(85);
     
-    // Simulate fetching recommendations
-    setTimeout(function() {
-        const recommendations = {
-            "urban": {
-                "sedan": [
-                    "Honda City",
-                    "Maruti Suzuki Dzire",
-                    "Hyundai Verna"
-                ],
-                "suv": [
-                    "Tata Nexon",
-                    "Hyundai Creta",
-                    "Mahindra XUV300"
-                ],
-                "hatchback": [
-                    "Maruti Suzuki Swift",
-                    "Hyundai Grand i10",
-                    "Tata Tiago"
-                ]
-            },
-            "semi-urban": {
-                "sedan": [
-                    "Maruti Suzuki Swift",
-                    "Honda Amaze",
-                    "Toyota Yaris"
-                ],
-                "suv": [
-                    "Mahindra Thar",
-                    "Tata Harrier",
-                    "Ford Ecosport"
-                ],
-                "hatchback": [
-                    "Maruti Suzuki Alto",
-                    "Honda Brio",
-                    "Renault Kwid"
-                ]
-            },
-            "tier-2": {
-                "sedan": [
-                    "Honda City",
-                    "Maruti Suzuki Dzire",
-                    "Hyundai Verna"
-                ],
-                "suv": [
-                    "Mahindra XUV500",
-                    "Tata Nexon",
-                    "Hyundai Creta"
-                ],
-                "hatchback": [
-                    "Maruti Suzuki Swift",
-                    "Hyundai i20",
-                    "Ford Figo"
-                ]
-            },
-            "metropolitan": {
-                "sedan": [
-                    "BMW 3 Series",
-                    "Audi A4",
-                    "Mercedes-Benz C-Class"
-                ],
-                "suv": [
-                    "BMW X5",
-                    "Mercedes-Benz GLC",
-                    "Audi Q5"
-                ],
-                "hatchback": [
-                    "Volkswagen Polo",
-                    "Hyundai i10",
-                    "Honda Jazz"
-                ]
+    // Simulate fetching recommendations using the public API
+    fetch(`https://jsonplaceholder.typicode.com/posts`)
+        .then(response => response.json())
+        .then(data => {
+            const resultDiv = document.getElementById('result');
+            const carList = document.getElementById('carList');
+            carList.innerHTML = ''; // Clear previous results
+
+            // Mock car recommendations based on city and car type
+            const mockData = {
+                "urban": {
+                    "sedan": ["Honda City", "Maruti Suzuki Dzire", "Hyundai Verna"],
+                    "suv": ["Tata Nexon", "Hyundai Creta", "Mahindra XUV300"],
+                    "hatchback": ["Maruti Suzuki Swift", "Hyundai Grand i10", "Tata Tiago"]
+                },
+                "semi-urban": {
+                    "sedan": ["Maruti Suzuki Swift", "Honda Amaze", "Toyota Yaris"],
+                    "suv": ["Mahindra Thar", "Tata Harrier", "Ford Ecosport"],
+                    "hatchback": ["Maruti Suzuki Alto", "Honda Brio", "Renault Kwid"]
+                },
+                "tier-2": {
+                    "sedan": ["Honda City", "Maruti Suzuki Dzire", "Hyundai Verna"],
+                    "suv": ["Mahindra XUV500", "Tata Nexon", "Hyundai Creta"],
+                    "hatchback": ["Maruti Suzuki Swift", "Hyundai i20", "Ford Figo"]
+                },
+                "metropolitan": {
+                    "sedan": ["BMW 3 Series", "Audi A4", "Mercedes-Benz C-Class"],
+                    "suv": ["BMW X5", "Mercedes-Benz GLC", "Audi Q5"],
+                    "hatchback": ["Volkswagen Polo", "Hyundai i10", "Honda Jazz"]
+                }
+            };
+
+            const recommendations = mockData[city][carType];
+            if (recommendations) {
+                resultDiv.style.display = 'block';
+                recommendations.forEach(car => {
+                    const li = document.createElement('li');
+                    li.textContent = car;
+                    carList.appendChild(li);
+                });
             }
-        };
 
-        // Hide loading animation and show results
-        document.getElementById('loading').style.display = 'none';
-        const resultDiv = document.getElementById('result');
-        const carList = document.getElementById('carList');
-        carList.innerHTML = ''; // Clear previous results
-        const carRecommendations = recommendations[city][carType];
-
-        if (carRecommendations) {
-            resultDiv.style.display = 'block';
-            carRecommendations.forEach(car => {
-                const li = document.createElement('li');
-                li.textContent = car;
-                carList.appendChild(li);
-            });
-        }
-
-        // Update progress bar to 100%
-        updateProgressBar(100);
-    }, 1500); // Simulated loading delay
+            // Hide loading animation and update progress bar to 100%
+            document.getElementById('loading').style.display = 'none';
+            updateProgressBar(100);
+        })
+        .catch(error => {
+            console.error('Error fetching car data:', error);
+            document.getElementById('loading').style.display = 'none';
+        });
 }
 
 // Reset the form for new selection
