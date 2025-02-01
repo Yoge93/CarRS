@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
     <div class="container">
         <h1>Find Your Perfect Car</h1>
         
@@ -55,9 +54,12 @@
         <!-- Results Section -->
         <div id="result" class="result" style="display: none;">
             <h2>Recommended Cars:</h2>
-            <ul id="carList"></ul>
+            <ul id="carList"></ul> <!-- This is where results will appear -->
             <button class="btn" onclick="resetForm()">Try Again</button>
         </div>
+
+        <!-- Error Message Container -->
+        <div id="error-message" class="error-message" style="display: none;"></div>
     </div>
 
     <script src="script.js"></script>
